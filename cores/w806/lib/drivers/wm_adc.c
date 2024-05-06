@@ -1,5 +1,7 @@
 #include "wm_adc.h"
 
+//ADC_HandleTypeDef* hadc_temp;
+
 static uint32_t _Get_Result(void)
 {
     uint32_t value;
@@ -21,7 +23,7 @@ HAL_StatusTypeDef HAL_ADC_Init(ADC_HandleTypeDef* hadc)
 {
     uint32_t div;
     wm_sys_clk sysclk;
-    
+	//hadc_temp = hadc;
     if (hadc == NULL)
     {
         return HAL_ERROR;
@@ -47,7 +49,6 @@ HAL_StatusTypeDef HAL_ADC_Init(ADC_HandleTypeDef* hadc)
     
     // 校验计算offset
     MODIFY_REG(hadc->Instance->ANA_CR, ADC_ANA_CR_CH | ADC_ANA_CR_PD, ADC_ANA_CR_RST | ADC_ANA_CR_LDOEN | ADC_ANA_CR_CH_OFFSET);
-    
     HAL_ADC_PollForConversion(hadc);
     hadc->offset = _Get_Result();
     __HAL_ADC_DISABLE(hadc);
@@ -99,6 +100,7 @@ HAL_StatusTypeDef HAL_ADC_Stop(ADC_HandleTypeDef* hadc)
     assert_param(IS_ADC_ALL_INSTANCE(hadc->Instance));
     
     __HAL_LOCK(hadc);
+	CLEAR_REG(hadc->Instance->PGA_CR);
     __HAL_ADC_DISABLE(hadc);
     __HAL_UNLOCK(hadc);
     
@@ -143,7 +145,7 @@ int HAL_ADC_GET_INPUT_VOLTAGE(ADC_HandleTypeDef* hadc)
     double voltage = 0.0;
     
     assert_param(IS_ADC_ALL_INSTANCE(hadc->Instance));
-    
+    HAL_ADC_Init(hadc);
     HAL_ADC_Start(hadc);
     HAL_ADC_PollForConversion(hadc);
     HAL_ADC_Stop(hadc);

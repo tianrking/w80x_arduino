@@ -185,7 +185,6 @@ void pinMode(uint8_t pin, uint8_t mode)
 						adcPinState[adc_index].channel = adc_channel;
 						adcPinState[adc_index].pin = pin;
 						//adcPinState[adc_index].hadc = adc[adc_index];
-						ADC_Init(&(adcPinState[adc_index].hadc), adc_channel);
 						adcPinState[adc_index].isPresent = true;
 					} else {
 					printf("Вывод %d не работает в АЦП режиме! \n\r", pin);}
@@ -339,6 +338,7 @@ double analogRead(uint8_t pin) {
 	double value = 0.0;
     for(uint8_t i = 0; i < ADC_COUNT; i++) {
 		if(adcPinState[i].pin == pin) {
+			ADC_Init(&(adcPinState[i].hadc), adcPinState[i].channel);
 			value = HAL_ADC_GET_INPUT_VOLTAGE(&(adcPinState[i].hadc));
 		}
     }
@@ -349,7 +349,7 @@ void ADC_Init(ADC_HandleTypeDef* hadc, uint32_t channel) {
     hadc->Instance = ADC;
     hadc->Init.channel = channel;
     hadc->Init.freq = 1000;
-    HAL_ADC_Init(hadc);
+    //HAL_ADC_Init(hadc);
 }
 
 //Встроенный криптомодуль ядра
