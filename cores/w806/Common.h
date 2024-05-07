@@ -31,6 +31,7 @@ typedef enum {
 */
 typedef uint8_t byte;
 typedef bool boolean;
+typedef unsigned int word;
 
 // Блок математики
 // Переопределение числа Pi 
@@ -69,7 +70,7 @@ typedef bool boolean;
 #define byte(w) ((uint8_t)(w))
 #define lowByte(w) ((uint8_t) ((w) & 0xff))
 #define highByte(w) ((uint8_t) ((w) >> 8))
-
+#define word(...) makeWord(__VA_ARGS__)
 #define bitRead(value, bit) (((value) >> (bit)) & 0x01)
 #define bitSet(value, bit) ((value) |= (1UL << (bit)))
 #define bitClear(value, bit) ((value) &= ~(1UL << (bit)))
@@ -154,5 +155,7 @@ int32_t random(int32_t);
 int32_t random(int32_t, int32_t);
 void randomSeed(uint32_t);
 int32_t map(int32_t, int32_t, int32_t, int32_t, int32_t);
+unsigned int makeWord(unsigned int w);
+unsigned int makeWord(unsigned char h, unsigned char l);
 #endif
 #endif

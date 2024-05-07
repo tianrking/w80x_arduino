@@ -52,3 +52,5 @@ int32_t map(int32_t x, int32_t in_min, int32_t in_max, int32_t out_min, int32_t 
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
+unsigned int makeWord(unsigned int w) { return w; }
+unsigned int makeWord(unsigned char h, unsigned char l) { return (h << 8) | l; }
