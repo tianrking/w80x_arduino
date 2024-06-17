@@ -56,7 +56,7 @@ enum pins
 #define MUX_PB13 (DIO | PWM1)
 #define MUX_PB14 (DIO | PWM2 | _SPI_SS)     // PIN_SPI_SS
 #define MUX_PB15 (DIO | PWM3 | _SPI_SCK)    // PIN_SPI_SCK
-#define MUX_PB16 (DIO | _SPI_MISO)          // PIN_SPI_MISO / LED_BUILTIN_6
+#define MUX_PB16 (DIO | PWM4 | _SPI_MISO)   // PIN_SPI_MISO / LED_BUILTIN_6
 #define MUX_PB17 (DIO | _SPI_MOSI)          // PIN_SPI_MOSI / LED_BUILTIN_5
 #define MUX_PB18 (DIO)                      // LED_BUILTIN_4
 #define MUX_PB19 (NONE) // TX0: used to download firmware and output to console
